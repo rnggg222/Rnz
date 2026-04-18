@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X PREMIUMS | Anime & Art Elite</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #0a0a0a; color: #e0e0e0; padding-bottom: 50px; }
+
+        :root {
+            --accent: #d4af37; 
+            --bg-card: #141414;
+            --bg-modal: #1a1a1a;
+        }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 5%; background: #000; border-bottom: 2px solid var(--accent);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo { font-size: 1.6rem; font-weight: 900; color: var(--accent); letter-spacing: 2px; cursor: pointer; }
+
+        .search-container { flex: 1; max-width: 400px; margin: 0 20px; }
+        .search-container input {
+            width: 100%; padding: 10px 15px; background: #222; border: 1px solid #333;
+            border-radius: 20px; color: white; outline: none;
+        }
+
+        .categories { display: flex; justify-content: center; gap: 10px; padding: 25px; flex-wrap: wrap; }
+        .tag {
+            background: #1a1a1a; padding: 8px 20px; border-radius: 4px; cursor: pointer;
+            border: 1px solid #333; font-size: 0.8rem; font-weight: bold; transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .tag.active { background: var(--accent); color: #000; border-color: #fff; }
+
+        .container { padding: 0 5%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+
+        .card { background: var(--bg-card); border-radius: 10px; overflow: hidden; border: 1px solid #222; transition: 0.3s; position: relative; }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .card.vip-plus { border: 2px solid var(--accent); box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+        
+        .thumb { width: 100%; height: 350px; cursor: pointer; object-fit: cover; border-bottom: 1px solid #222; }
+        .info { padding: 20px; }
+        .info h3 { margin-bottom: 5px; font-size: 1.1rem; color: var(--accent); }
+        .info p { font-size: 0.85rem; color: #888; margin-bottom: 15px; }
+        
+        .btn-buy {
+            display: block; width: 100%; text-align: center; background: var(--accent);
+            color: #000; text-decoration: none; padding: 12px; border-radius: 4px;
+            font-weight: 800; text-transform: uppercase; cursor: pointer; border: none;
+        }
+
+        .modal {
+            display: none; position: fixed; z-index: 999; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--bg-modal); padding: 30px; border-radius: 15px;
+            width: 90%; max-width: 400px; border: 1px solid var(--accent);
+            text-align: center;
+        }
+
+        .upload-section { margin: 40px 0; padding: 30px; background: #111; border: 1px dashed var(--accent); border-radius: 10px; text-align: center; }
+        #gallery-preview { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 20px; }
+        .preview-img { width: 100%; height: 100px; object-fit: cover; border-radius: 5px; border: 1px solid var(--accent); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo" onclick="location.reload()">X PREMIUMS</div>
+    <div class="search-container"><input type="text" id="input-busca" placeholder="Pesquisar no acervo..."></div>
+    <div style="color: var(--accent); font-weight: bold; cursor: pointer; font-size: 0.8rem;">ENTRAR</div>
+</header>
+
+<div class="categories">
+    <div class="tag active" data-filter="todos">Todos</div>
+    <div class="tag" data-filter="porn">Porn</div>
+    <div class="tag" data-filter="hentai">Hentai</div>
+</div>
+
+<div class="container">
+    <div class="upload-section">
+        <h3 style="color: var(--accent); margin-bottom: 10px;">SUBMETER CONTEÚDO</h3>
+        <input type="file" id="file-input" accept="image/*" multiple style="display: none;">
+        <label for="file-input" class="btn-buy" style="display: inline-block; width: auto; padding: 10px 30px;">SELECIONAR FICHEIROS</label>
+        <div id="gallery-preview"></div>
+    </div>
+
+    <div class="grid" id="main-grid">
+        <div class="card" data-cat="hentai">
+            <img src="[attachment_0](attachment)" class="thumb" onclick="abrirPagamento('Pack Básico', '19,99')">
+            <div class="info">
+                <h3>Pack Básico</h3>
+                <p>Galeria inicial para colecionadores.</p>
+                <button class="btn-buy" onclick="abrirPagamento('Pack Básico', '19,99')">Desbloquear R$ 19,99</button>
+            </div>
+        </div>
+
+        <div class="card" data-cat="hentai">
+            <img src="[attachment_1](attachment)" class="thumb" onclick="abrirPagamento('Pack Médio', '29,99')">
+            <div class="info">
+                <h3>Pack Médio</h3>
+                <p>Seleção premium de alta qualidade.</p>
+                <button class="btn-buy" onclick="abrirPagamento('Pack Médio', '29,99')">Desbloquear R$ 29,99</button>
+            </div>
+        </div>
+
+        <div class="card" data-cat="hentai">
+            <img src="[attachment_2](attachment)" class="thumb" onclick="abrirPagamento('Pack Alto', '39,99')">
+            <div class="info">
+                <h3>Pack Alto</h3>
+                <p>Obras exclusivas e raras.</p>
+                <button class="btn-buy" onclick="abrirPagamento('Pack Alto', '39,99')">Desbloquear R$ 39,99</button>
+            </div>
+        </div>
+
+        <div class="card vip-plus" data-cat="hentai">
+            <img src="[attachment_3](attachment)" class="thumb" onclick="abrirPagamento('Acesso VIP', '49,99')">
+            <div class="info">
+                <h3 style="color: #fff;">ACESSO VIP</h3>
+                <p>Acesso total e ilimitado a todo o portal.</p>
+                <button class="btn-buy" onclick="abrirPagamento('Acesso VIP', '49,99')" style="background: #fff; color: #000;">Assinar R$ 49,99</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalPagamento" class="modal">
+    <div class="modal-content">
+        <h2 id="nomeItem" style="color: var(--accent);">PLANO</h2>
+        <h3 id="precoItem" style="margin: 10px 0; color: #fff; font-size: 2rem;">R$ 0,00</h3>
+        <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Pagamento instantâneo via PIX</p>
+        <div style="margin-top: 10px;">
+            <button class="btn-buy" onclick="finalizar()">PAGAR COM PIX</button>
+        </div>
+        <p onclick="fecharPagamento()" style="margin-top: 20px; cursor: pointer; font-size: 0.8rem; color: #888; text-decoration: underline;">CANCELAR</p>
+    </div>
+</div>
+
+<script>
+    const tags = document.querySelectorAll('.tag');
+    const cards = document.querySelectorAll('.card');
+
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            tags.forEach(t => t.classList.remove('active'));
+            tag.classList.add('active');
+            const filter = tag.getAttribute('data-filter');
+            cards.forEach(card => {
+                card.style.display = (filter === 'todos' || card.getAttribute('data-cat') === filter) ? 'block' : 'none';
+            });
+        });
+    });
+
+    document.getElementById('input-busca').addEventListener('input', (e) => {
+        const termo = e.target.value.toLowerCase();
+        cards.forEach(card => {
+            card.style.display = card.innerText.toLowerCase().includes(termo) ? 'block' : 'none';
+        });
+    });
+
+    function abrirPagamento(nome, preco) {
+        document.getElementById('nomeItem').innerText = nome;
+        document.getElementById('precoItem').innerText = 'R$ ' + preco;
+        document.getElementById('modalPagamento').style.display = 'flex';
+    }
+    function fecharPagamento() { document.getElementById('modalPagamento').style.display = 'none'; }
+    function finalizar() { alert('A gerar QR Code Pix...'); fecharPagamento(); }
+
+    document.getElementById('file-input').addEventListener('change', function() {
+        const preview = document.getElementById('gallery-preview');
+        Array.from(this.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'preview-img';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+</script>
+</body>
+</html>
